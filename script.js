@@ -28,7 +28,7 @@ function checkPassword() {
   }
 }
 
-window.onload = () => {
+window.onload = async () => {
 
   const unlocked =
     localStorage.getItem("tereUnlocked");
@@ -43,6 +43,8 @@ window.onload = () => {
       .getElementById("app")
       .classList.remove("hidden");
   }
+
+  await loadData();
 };
 
 
@@ -53,6 +55,11 @@ async function loadData() {
 
   const data =
     await response.json();
+  
+    console.log(data);
+    console.log(data.meme);
+    console.log(data.photo);
+    console.log(data.video);
 
   document
     .getElementById("quote")
@@ -63,6 +70,10 @@ async function loadData() {
     .getElementById("memeImage")
     .src =
       data.meme;
+      document
+      .getElementById("memeImage")
+      .onload = () =>
+        console.log("MEME LOADED");
 
       document
   .getElementById("photoImage")
@@ -87,4 +98,3 @@ document
 }, 500);
 }
 
-loadData();
