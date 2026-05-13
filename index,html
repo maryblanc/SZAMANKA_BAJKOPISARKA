@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>szamanka-bajkopisarka</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app">
+
+    <h1>🩷 SZAMANKA-BAJKOPISARKA</h1>
+
+    <div class="card">
+      <h2>Quote of the day</h2>
+      <p id="quote">
+        loading...
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Meme of the day</h2>
+
+      <img
+        id="meme"
+        src="https://placehold.co/400x300"
+        alt="meme"
+      >
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
