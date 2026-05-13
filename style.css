@@ -2,33 +2,125 @@ body {
   margin: 0;
   padding: 0;
 
-  background: #fff0f5;
+  background:
+    linear-gradient(
+      to bottom,
+      #fff0f6,
+      #ffe4ec
+    );
 
   font-family: Arial, sans-serif;
+
   color: #333;
 }
 
-.app {
+/* LOCK SCREEN */
+
+.lock-screen {
+  height: 100vh;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
   padding: 20px;
 }
 
-h1 {
+.lock-card {
+  background: rgba(255,255,255,0.8);
+
+  backdrop-filter: blur(10px);
+
+  padding: 30px;
+
+  border-radius: 30px;
+
+  width: 100%;
+  max-width: 320px;
+
   text-align: center;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.1);
+}
+
+.lock-card input {
+  width: 100%;
+
+  padding: 14px;
+
+  margin-top: 15px;
+
+  border: none;
+
+  border-radius: 15px;
+
+  font-size: 16px;
+
+  box-sizing: border-box;
+}
+
+.lock-card button {
+  margin-top: 15px;
+
+  width: 100%;
+
+  padding: 14px;
+
+  border: none;
+
+  border-radius: 15px;
+
+  background: #ff6fa5;
+
+  color: white;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+#errorText {
+  color: #ff4d6d;
+}
+
+/* APP */
+
+.hidden {
+  display: none;
+}
+
+.container {
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+
+  margin-bottom: 30px;
 }
 
 .card {
-  background: white;
+  background:
+    rgba(255,255,255,0.75);
+
+  backdrop-filter: blur(10px);
 
   padding: 20px;
 
   margin-bottom: 20px;
 
-  border-radius: 20px;
+  border-radius: 25px;
 
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.08);
 }
 
 img {
   width: 100%;
-  border-radius: 15px;
+
+  border-radius: 20px;
+
+  margin-top: 10px;
 }
