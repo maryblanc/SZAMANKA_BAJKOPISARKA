@@ -73,6 +73,18 @@ document
   .getElementById("videoPlayer")
   .src =
     data.video;
+
+    document
+      .getElementById("loadingScreen")
+      .style.opacity = "0";
+
+    setTimeout(() => {
+
+  document
+    .getElementById("loadingScreen")
+    .style.display = "none";
+
+}, 500);
 }
 
 loadData();
