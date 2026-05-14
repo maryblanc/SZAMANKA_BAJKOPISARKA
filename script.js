@@ -53,13 +53,6 @@ const TODAY =
     );
 
     setUserBadge(user);
-        const button =
-      document.querySelector(".otherDailyButton");
-
-    button.innerText =
-      user === "teresa"
-        ? "✨ zobacz daily Marysi"
-        : "✨ zobacz daily Tereski";
 
 
     document
@@ -149,6 +142,7 @@ async function loadData(userOverride = null) {
       .style.opacity = "1";
 
     const currentUser =
+      userOverride ||
       localStorage.getItem("tereUser");
 
     if(!currentUser) {
@@ -224,6 +218,21 @@ async function loadData(userOverride = null) {
       .getElementById("videoPlayer")
       .src =
         data.video;
+
+        if(data.latestMessage) {
+
+          document
+            .getElementById("latestMessageText")
+            .innerText =
+              `od ${data.latestMessage.from} ✨\n\n${data.latestMessage.message}`;
+
+        } else {
+
+          document
+            .getElementById("latestMessageText")
+            .innerText =
+              "jeszcze nic tu nie ma ✨";
+        }
 
     document
       .getElementById("loadingScreen")
@@ -430,3 +439,76 @@ async function showAnotherVideo() {
   }
 }
 
+
+async function sendMessage() {
+
+  const button =
+    event.target;
+
+  const originalText =
+    button.innerText;
+
+  const message =
+    document
+      .getElementById("messageInput")
+      .value
+      .trim();
+
+  if(!message) {
+    return;
+  }
+
+  button.classList.add("loading");
+
+  button.innerText =
+    "✨ wysyłanie...";
+
+  try {
+
+    const currentUser =
+      localStorage.getItem("tereUser");
+
+    const otherUser =
+      currentUser === "teresa"
+        ? "marysia"
+        : "teresa";
+
+    await fetch(
+      "https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec",
+      {
+        method: "POST",
+
+        body: JSON.stringify({
+          to: otherUser,
+          from: currentUser,
+          message
+        })
+      }
+    );
+
+    document
+      .getElementById("messageInput")
+      .value = "";
+
+    button.innerText =
+      "✨ wysłano";
+
+    setTimeout(() => {
+
+      button.innerText =
+        originalText;
+
+      button.classList.remove("loading");
+
+    }, 1200);
+
+  } catch(error) {
+
+    console.error(error);
+
+    button.classList.remove("loading");
+
+    button.innerText =
+      originalText;
+  }
+}
