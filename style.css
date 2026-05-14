@@ -415,10 +415,6 @@ iframe {
 
 #userBadge {
 
-  position: fixed;
-
-  top: 18px;
-  right: 18px;
 
   width: 42px;
   height: 42px;
@@ -747,7 +743,6 @@ iframe {
   color: #b18b9d;
 }
 
-
 #topBar {
 
   position: fixed;
@@ -759,7 +754,7 @@ iframe {
 
   align-items: center;
 
-  gap: 10px;
+  gap: 12px;
 
   z-index: 1000;
 }
