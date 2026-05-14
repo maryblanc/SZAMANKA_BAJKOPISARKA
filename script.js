@@ -1,13 +1,29 @@
-const PASSWORD = "szamanka";
+const USERS = {
+
+  "bajkopisarka": "teresa",
+  "cooper": "teresa",
+  "teresa": "teresa",
+
+  "szamanka": "marysia",
+  "betty": "marysia",
+  "marysia": "marysia"
+};
+
+const SESSION_TIME =
+  1000 * 60 * 20;
 
 function checkPassword() {
 
   const input =
     document
       .getElementById("passwordInput")
-      .value;
+      .value
+      .toLowerCase();
 
-  if(input === PASSWORD) {
+  const user =
+    USERS[input];
+
+  if(user) {
 
     document
       .getElementById("lockScreen")
@@ -17,15 +33,48 @@ function checkPassword() {
       .getElementById("app")
       .classList.remove("hidden");
 
-    localStorage.setItem("tereUnlocked", "true");
+    localStorage.setItem(
+      "tereUnlocked",
+      "true"
+    );
+
+    localStorage.setItem(
+      "tereUser",
+      user
+    );
+
+    localStorage.setItem(
+      "tereUnlockTime",
+      Date.now()
+    );
+
+    setUserBadge(user);
+    document
+  .getElementById("passwordInput")
+  .value = "";
+
+    document
+      .getElementById("errorText")
+      .innerText = "";
+    loadData();
 
   } else {
 
     document
       .getElementById("errorText")
       .innerText =
-        "wrong password :(";
+        "złe hasło :(";
   }
+}
+
+function setUserBadge(user) {
+
+  document
+    .getElementById("userBadge")
+    .innerText =
+      user === "teresa"
+        ? "T"
+        : "M";
 }
 
 window.onload = async () => {
@@ -33,7 +82,20 @@ window.onload = async () => {
   const unlocked =
     localStorage.getItem("tereUnlocked");
 
-  if(unlocked === "true") {
+  const unlockTime =
+    localStorage.getItem("tereUnlockTime");
+
+  const user =
+    localStorage.getItem("tereUser");
+
+  const now =
+    Date.now();
+
+  const sessionValid =
+    unlockTime &&
+    (now - unlockTime < SESSION_TIME);
+
+  if(unlocked === "true" && sessionValid) {
 
     document
       .getElementById("lockScreen")
@@ -42,13 +104,31 @@ window.onload = async () => {
     document
       .getElementById("app")
       .classList.remove("hidden");
-  }
 
-  await loadData();
+    setUserBadge(user);
+
+    await loadData();
+
+  } else {
+
+    localStorage.removeItem("tereUnlocked");
+
+    localStorage.removeItem("tereUser");
+
+    localStorage.removeItem("tereUnlockTime");
+  }
 };
 
 
 async function loadData() {
+
+  document
+  .getElementById("loadingScreen")
+  .style.display = "flex";
+
+  document
+    .getElementById("loadingScreen")
+    .style.opacity = "1";
 
   const response =
     await fetch("https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec");

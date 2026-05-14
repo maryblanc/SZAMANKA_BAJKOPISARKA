@@ -424,3 +424,39 @@ iframe {
   box-shadow:
     0 8px 20px rgba(0,0,0,0.08);
 }
+
+
+
+#userBadge {
+
+  position: fixed;
+
+  top: 18px;
+  right: 18px;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255,255,255,0.55);
+
+  backdrop-filter: blur(12px);
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-weight: bold;
+
+  color: #ff5c9f;
+
+  box-shadow:
+    0 6px 16px rgba(255,105,180,0.15);
+
+  z-index: 1000;
+
+  font-size: 18px;
+}
