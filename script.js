@@ -257,8 +257,6 @@ async function loadData(userOverride = null) {
 }
 
 
-
-
 document
   .getElementById("passwordInput")
   .addEventListener("keydown", (e) => {
@@ -512,3 +510,71 @@ async function sendMessage() {
       originalText;
   }
 }
+
+
+function updateClock() {
+
+  const now =
+    new Date();
+
+  const date =
+    now.toLocaleDateString(
+      "pl-PL",
+      {
+        weekday: "long",
+        day: "numeric",
+        month: "long"
+      }
+    );
+
+  const time =
+    now.toLocaleTimeString(
+      "pl-PL",
+      {
+        hour: "2-digit",
+        minute: "2-digit"
+      }
+    );
+
+  document
+    .getElementById("dateClock")
+    .innerHTML =
+      `🩷 ${date}<br>${time}`;
+}
+
+updateClock();
+
+setInterval(updateClock, 1000);
+
+
+function logout() {
+
+  localStorage.removeItem(
+    "tereUnlocked"
+  );
+
+  localStorage.removeItem(
+    "tereUser"
+  );
+
+  localStorage.removeItem(
+    "tereUnlockTime"
+  );
+
+  location.reload();
+}
+
+
+setInterval(() => {
+
+  const unlocked =
+    localStorage.getItem(
+      "tereUnlocked"
+    );
+
+  if(unlocked === "true") {
+
+    loadData();
+  }
+
+}, 20000);
