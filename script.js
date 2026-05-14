@@ -12,7 +12,11 @@ const USERS = {
 const SESSION_TIME =
   1000 * 60 * 20;
 
-function checkPassword() {
+const TODAY =
+  new Date().toDateString();
+
+
+  function checkPassword() {
 
   const input =
     document
@@ -119,27 +123,63 @@ window.onload = async () => {
   }
 };
 
-
 async function loadData() {
 
   document
-  .getElementById("loadingScreen")
-  .style.display = "flex";
+    .getElementById("loadingScreen")
+    .style.display = "flex";
 
   document
     .getElementById("loadingScreen")
     .style.opacity = "1";
 
-  const response =
-    await fetch("https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec");
+  const currentUser =
+    localStorage.getItem("tereUser");
 
-  const data =
-    await response.json();
-  
+  const cacheKey =
+    `dailyData_${currentUser}`;
+
+  const cachedData =
+    localStorage.getItem(cacheKey);
+
+  const cachedDate =
+    localStorage.getItem(
+      `${cacheKey}_date`
+    );
+
+  let data;
+
+  if(cachedData && cachedDate === TODAY) {
+
+    data =
+      JSON.parse(cachedData);
+
+    console.log("USING CACHE");
+
+  } else {
+
+    console.log("FETCHING NEW DATA");
+
+    const response =
+      await fetch(
+        "https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec"
+      );
+
+    data =
+      await response.json();
+
+    localStorage.setItem(
+      cacheKey,
+      JSON.stringify(data)
+    );
+
+    localStorage.setItem(
+      `${cacheKey}_date`,
+      TODAY
+    );
+  }
+
     console.log(data);
-    console.log(data.meme);
-    console.log(data.photo);
-    console.log(data.video);
 
   document
     .getElementById("quote")
@@ -150,31 +190,26 @@ async function loadData() {
     .getElementById("memeImage")
     .src =
       data.meme;
-      document
-      .getElementById("memeImage")
-      .onload = () =>
-        console.log("MEME LOADED");
 
-      document
-  .getElementById("photoImage")
-  .src =
-    data.photo;
+  document
+    .getElementById("photoImage")
+    .src =
+      data.photo;
 
-document
-  .getElementById("videoPlayer")
-  .src =
-    data.video;
-
-    document
-      .getElementById("loadingScreen")
-      .style.opacity = "0";
-
-    setTimeout(() => {
+  document
+    .getElementById("videoPlayer")
+    .src =
+      data.video;
 
   document
     .getElementById("loadingScreen")
-    .style.display = "none";
+    .style.opacity = "0";
 
-}, 500);
+  setTimeout(() => {
+
+    document
+      .getElementById("loadingScreen")
+      .style.display = "none";
+
+  }, 500);
 }
-
