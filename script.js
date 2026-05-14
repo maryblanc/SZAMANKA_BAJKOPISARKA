@@ -121,7 +121,18 @@ window.onload = async () => {
     setUserBadge(user);
 
     await loadData();
- 
+
+  } else {
+
+    localStorage.removeItem("tereUnlocked");
+
+    localStorage.removeItem("tereUser");
+
+    localStorage.removeItem("tereUnlockTime");
+
+    document
+      .getElementById("loadingScreen")
+      .style.display = "none";
   }
 };
 
