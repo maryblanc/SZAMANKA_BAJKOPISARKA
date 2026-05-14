@@ -120,6 +120,10 @@ window.onload = async () => {
     localStorage.removeItem("tereUser");
 
     localStorage.removeItem("tereUnlockTime");
+
+    document
+    .getElementById("loadingScreen")
+    .style.display = "none";
   }
 };
 
