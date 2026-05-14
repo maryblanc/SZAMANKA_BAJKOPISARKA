@@ -248,19 +248,6 @@ async function loadData(userOverride = null) {
 }
 
 
-async function loadOtherDaily() {
-
-  const currentUser =
-    localStorage.getItem("tereUser");
-
-  const otherUser =
-    currentUser === "teresa"
-      ? "marysia"
-      : "teresa";
-
-  await loadData(otherUser);
-}
-
 
 
 document
