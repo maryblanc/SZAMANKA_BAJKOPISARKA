@@ -136,7 +136,7 @@ window.onload = async () => {
   }
 };
 
-async function loadData() {
+async function loadData(userOverride = null) {
 
   try {
 
@@ -186,7 +186,7 @@ async function loadData() {
 
       const response =
         await fetch(
-          "https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec"
+          `https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec?user=${currentUser}`
         );
 
       data =
@@ -248,7 +248,7 @@ async function loadData() {
 }
 
 
-function loadOtherDaily() {
+async function loadOtherDaily() {
 
   const currentUser =
     localStorage.getItem("tereUser");
@@ -258,47 +258,7 @@ function loadOtherDaily() {
       ? "marysia"
       : "teresa";
 
-  const otherName =
-    otherUser === "teresa"
-      ? "Tereska"
-      : "Marysia";
-
-  const otherData =
-    localStorage.getItem(
-      `dailyData_${otherUser}`
-    );
-
-  if(!otherData) {
-
-    alert(
-      `${otherName} jeszcze dziś tu nie była ✨`
-    );
-
-    return;
-  }
-
-  const data =
-    JSON.parse(otherData);
-
-  document
-    .getElementById("quote")
-    .innerText =
-      data.quote;
-
-  document
-    .getElementById("memeImage")
-    .src =
-      data.meme;
-
-  document
-    .getElementById("photoImage")
-    .src =
-      data.photo;
-
-  document
-    .getElementById("videoPlayer")
-    .src =
-      data.video;
+  await loadData(otherUser);
 }
 
 
@@ -311,3 +271,85 @@ document
       checkPassword();
     }
   });
+
+
+  async function showAnotherQuote() {
+
+  const currentUser =
+    localStorage.getItem("tereUser");
+
+  const response =
+    await fetch(
+      `https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec?user=${currentUser}`
+    );
+
+  const data =
+    await response.json();
+
+  document
+    .getElementById("quote")
+    .innerText =
+      data.quote;
+}
+
+
+async function showAnotherMeme() {
+
+  const currentUser =
+    localStorage.getItem("tereUser");
+
+  const response =
+    await fetch(
+      `https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec?user=${currentUser}`
+    );
+
+  const data =
+    await response.json();
+
+  document
+    .getElementById("memeImage")
+    .src =
+      data.meme;
+}
+
+
+async function showAnotherPhoto() {
+
+  const currentUser =
+    localStorage.getItem("tereUser");
+
+  const response =
+    await fetch(
+      `https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec?user=${currentUser}`
+    );
+
+  const data =
+    await response.json();
+
+  document
+    .getElementById("photoImage")
+    .src =
+      data.photo;
+}
+
+
+async function showAnotherVideo() {
+
+  const currentUser =
+    localStorage.getItem("tereUser");
+
+  const response =
+    await fetch(
+      `https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec?user=${currentUser}`
+    );
+
+  const data =
+    await response.json();
+
+  document
+    .getElementById("videoPlayer")
+    .src =
+      data.video;
+}
+
+
