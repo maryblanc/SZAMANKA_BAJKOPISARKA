@@ -611,3 +611,22 @@ iframe {
 
   transform: scale(1.02);
 }
+
+
+.smallButton.loading {
+
+  opacity: 0.7;
+
+  background:
+    linear-gradient(
+      to right,
+      #ff5c9f,
+      #ff8dc7
+    );
+
+  color: white;
+
+  transform: scale(0.98);
+
+  pointer-events: none;
+}

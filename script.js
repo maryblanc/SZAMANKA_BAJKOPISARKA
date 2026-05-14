@@ -272,28 +272,64 @@ document
     }
   });
 
+// show another quote
 
   async function showAnotherQuote() {
 
-  const currentUser =
-    localStorage.getItem("tereUser");
+  const button =
+    event.target;
 
-  const response =
-    await fetch(
-      `https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec?user=${currentUser}`
-    );
+  const originalText =
+    button.innerText;
 
-  const data =
-    await response.json();
+  button.classList.add("loading");
 
-  document
-    .getElementById("quote")
-    .innerText =
-      data.quote;
+  button.innerText =
+    "✨ ładowanie...";
+
+  try {
+
+    const currentUser =
+      localStorage.getItem("tereUser");
+
+    const response =
+      await fetch(
+        `https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec?user=${currentUser}`
+      );
+
+    const data =
+      await response.json();
+
+    document
+      .getElementById("quote")
+      .innerText =
+        data.quote;
+
+  } catch(error) {
+
+    console.error(error);
+
+  } finally {
+
+    button.classList.remove("loading");
+
+    button.innerText =
+      originalText;
+  }
 }
 
-
 async function showAnotherMeme() {
+
+  const button =
+    event.target;
+
+  const originalText =
+    button.innerText;
+
+  button.classList.add("loading");
+
+  button.innerText =
+    "✨ ładowanie...";
 
   const currentUser =
     localStorage.getItem("tereUser");
@@ -310,46 +346,100 @@ async function showAnotherMeme() {
     .getElementById("memeImage")
     .src =
       data.meme;
+
+  button.classList.remove("loading");
+
+  button.innerText =
+    originalText;
 }
 
 
 async function showAnotherPhoto() {
 
-  const currentUser =
-    localStorage.getItem("tereUser");
+  const button =
+    event.target;
 
-  const response =
-    await fetch(
-      `https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec?user=${currentUser}`
-    );
+  const originalText =
+    button.innerText;
 
-  const data =
-    await response.json();
+  button.classList.add("loading");
 
-  document
-    .getElementById("photoImage")
-    .src =
-      data.photo;
+  button.innerText =
+    "✨ ładowanie...";
+
+  try {
+
+    const currentUser =
+      localStorage.getItem("tereUser");
+
+    const response =
+      await fetch(
+        `https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec?user=${currentUser}`
+      );
+
+    const data =
+      await response.json();
+
+    document
+      .getElementById("photoImage")
+      .src =
+        data.photo;
+
+  } catch(error) {
+
+    console.error(error);
+
+  } finally {
+
+    button.classList.remove("loading");
+
+    button.innerText =
+      originalText;
+  }
 }
 
 
 async function showAnotherVideo() {
 
-  const currentUser =
-    localStorage.getItem("tereUser");
+  const button =
+    event.target;
 
-  const response =
-    await fetch(
-      `https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec?user=${currentUser}`
-    );
+  const originalText =
+    button.innerText;
 
-  const data =
-    await response.json();
+  button.classList.add("loading");
 
-  document
-    .getElementById("videoPlayer")
-    .src =
-      data.video;
+  button.innerText =
+    "✨ ładowanie...";
+
+  try {
+
+    const currentUser =
+      localStorage.getItem("tereUser");
+
+    const response =
+      await fetch(
+        `https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec?user=${currentUser}`
+      );
+
+    const data =
+      await response.json();
+
+    document
+      .getElementById("videoPlayer")
+      .src =
+        data.video;
+
+  } catch(error) {
+
+    console.error(error);
+
+  } finally {
+
+    button.classList.remove("loading");
+
+    button.innerText =
+      originalText;
+  }
 }
-
 
