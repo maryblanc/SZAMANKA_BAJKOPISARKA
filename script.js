@@ -125,91 +125,111 @@ window.onload = async () => {
 
 async function loadData() {
 
-  document
-    .getElementById("loadingScreen")
-    .style.display = "flex";
+  try {
 
-  document
-    .getElementById("loadingScreen")
-    .style.opacity = "1";
+    document
+      .getElementById("loadingScreen")
+      .style.display = "flex";
 
-  const currentUser =
-    localStorage.getItem("tereUser");
+    document
+      .getElementById("loadingScreen")
+      .style.opacity = "1";
 
-  const cacheKey =
-    `dailyData_${currentUser}`;
+    const currentUser =
+      localStorage.getItem("tereUser");
 
-  const cachedData =
-    localStorage.getItem(cacheKey);
+    if(!currentUser) {
 
-  const cachedDate =
-    localStorage.getItem(
-      `${cacheKey}_date`
-    );
+      document
+        .getElementById("loadingScreen")
+        .style.display = "none";
 
-  let data;
+      return;
+    }
 
-  if(cachedData && cachedDate === TODAY) {
+    const cacheKey =
+      `dailyData_${currentUser}`;
 
-    data =
-      JSON.parse(cachedData);
+    const cachedData =
+      localStorage.getItem(cacheKey);
 
-    console.log("USING CACHE");
-
-  } else {
-
-    console.log("FETCHING NEW DATA");
-
-    const response =
-      await fetch(
-        "https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec"
+    const cachedDate =
+      localStorage.getItem(
+        `${cacheKey}_date`
       );
 
-    data =
-      await response.json();
+    let data;
 
-    localStorage.setItem(
-      cacheKey,
-      JSON.stringify(data)
-    );
+    if(cachedData && cachedDate === TODAY) {
 
-    localStorage.setItem(
-      `${cacheKey}_date`,
-      TODAY
-    );
-  }
+      data =
+        JSON.parse(cachedData);
+
+      console.log("USING CACHE");
+
+    } else {
+
+      console.log("FETCHING NEW DATA");
+
+      const response =
+        await fetch(
+          "https://script.google.com/macros/s/AKfycbz2TEAfaDzuRdJxuUMkYYIMytBOa4Z3qU4M-BFeWwaus1-WoN-TGD23TK8jRW3L36YUfg/exec"
+        );
+
+      data =
+        await response.json();
+
+      localStorage.setItem(
+        cacheKey,
+        JSON.stringify(data)
+      );
+
+      localStorage.setItem(
+        `${cacheKey}_date`,
+        TODAY
+      );
+    }
 
     console.log(data);
 
-  document
-    .getElementById("quote")
-    .innerText =
-      data.quote;
+    document
+      .getElementById("quote")
+      .innerText =
+        data.quote;
 
-  document
-    .getElementById("memeImage")
-    .src =
-      data.meme;
+    document
+      .getElementById("memeImage")
+      .src =
+        data.meme;
 
-  document
-    .getElementById("photoImage")
-    .src =
-      data.photo;
+    document
+      .getElementById("photoImage")
+      .src =
+        data.photo;
 
-  document
-    .getElementById("videoPlayer")
-    .src =
-      data.video;
+    document
+      .getElementById("videoPlayer")
+      .src =
+        data.video;
 
-  document
-    .getElementById("loadingScreen")
-    .style.opacity = "0";
+    document
+      .getElementById("loadingScreen")
+      .style.opacity = "0";
 
-  setTimeout(() => {
+    setTimeout(() => {
+
+      document
+        .getElementById("loadingScreen")
+        .style.display = "none";
+
+    }, 500);
+
+  } catch(error) {
+
+    console.error(error);
 
     document
       .getElementById("loadingScreen")
       .style.display = "none";
-
-  }, 500);
+  }
 }
