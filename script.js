@@ -53,6 +53,15 @@ const TODAY =
     );
 
     setUserBadge(user);
+        const button =
+      document.querySelector(".otherDailyButton");
+
+    button.innerText =
+      user === "teresa"
+        ? "✨ zobacz daily Marysi"
+        : "✨ zobacz daily Tereski";
+
+
     document
   .getElementById("passwordInput")
   .value = "";
@@ -112,18 +121,7 @@ window.onload = async () => {
     setUserBadge(user);
 
     await loadData();
-
-  } else {
-
-    localStorage.removeItem("tereUnlocked");
-
-    localStorage.removeItem("tereUser");
-
-    localStorage.removeItem("tereUnlockTime");
-
-    document
-    .getElementById("loadingScreen")
-    .style.display = "none";
+ 
   }
 };
 
@@ -237,3 +235,68 @@ async function loadData() {
       .style.display = "none";
   }
 }
+
+
+function loadOtherDaily() {
+
+  const currentUser =
+    localStorage.getItem("tereUser");
+
+  const otherUser =
+    currentUser === "teresa"
+      ? "marysia"
+      : "teresa";
+
+  const otherName =
+    otherUser === "teresa"
+      ? "Tereska"
+      : "Marysia";
+
+  const otherData =
+    localStorage.getItem(
+      `dailyData_${otherUser}`
+    );
+
+  if(!otherData) {
+
+    alert(
+      `${otherName} jeszcze dziś tu nie była ✨`
+    );
+
+    return;
+  }
+
+  const data =
+    JSON.parse(otherData);
+
+  document
+    .getElementById("quote")
+    .innerText =
+      data.quote;
+
+  document
+    .getElementById("memeImage")
+    .src =
+      data.meme;
+
+  document
+    .getElementById("photoImage")
+    .src =
+      data.photo;
+
+  document
+    .getElementById("videoPlayer")
+    .src =
+      data.video;
+}
+
+
+
+document
+  .getElementById("passwordInput")
+  .addEventListener("keydown", (e) => {
+
+    if(e.key === "Enter") {
+      checkPassword();
+    }
+  });
